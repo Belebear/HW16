@@ -17,20 +17,27 @@ import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
+@DisplayName("Добавление и удаление книги")
 public class AddAndDeleteBookTest extends TestBase {
     ProfilePage profilePage = new ProfilePage();
 
-    @DisplayName("Добавление и удаление книги")
     @Test
     @Tag("api_ui_test")
     void addAndDeleteBookTest() {
+        step("Очистка таблицы", () ->{
+            given(RequestSpec.baseSpec())
+                    .when()
+                    .delete("/BookStore/v1/Books?UserId=" + TestBase.getAuthResponse().path("userId") )
+                    .then()
+                    .spec(ResponseSpec.baseResp(204));
+        });
+
         AddBookRequestBodyModel.CollectionOfIsbns collectionOne = AddBookRequestBodyModel.CollectionOfIsbns.builder()
                 .isbn(TestData.isbn_1)
                 .build();
 
         AddBookRequestBodyModel requestBody = AddBookRequestBodyModel.builder()
-                .userId("89a2b50d-078a-49c2-97ca-e52a3941aece")
+                .userId(TestBase.getAuthResponse().path("userId"))
                 .collectionOfIsbns(List.of(collectionOne))
                 .build();
 

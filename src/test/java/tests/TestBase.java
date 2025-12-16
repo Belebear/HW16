@@ -38,7 +38,7 @@ public class TestBase {
         SelenideLogger.addListener("allure", new AllureSelenide());
     }
 
-    @DisplayName("Авторизация и получение  токена")
+    @DisplayName("Авторизация и получение токена")
     public static Response getAuthResponse() {
         Response authCookie = given()
                 .body(body.formatted(userName, password))
