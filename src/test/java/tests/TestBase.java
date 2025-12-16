@@ -54,7 +54,6 @@ public class TestBase {
         return authCookie;
     }
 
-
     @AfterEach
     void closeWeb() {
         Selenide.closeWebDriver();
