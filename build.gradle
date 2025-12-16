@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+    id "io.freefair.lombok" version "9.1.0"
+    id 'io.qameta.allure' version '2.11.2'
+}
+
+group = 'ru.mail.barkalov'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+allure {
+    report {
+        version.set("2.24.0")
+    }
+    adapter {
+        aspectjWeaver.set(true)
+        frameworks {
+            junit5 {
+                adapterVersion.set("2.24.0")
+            }
+        }
+    }
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation 'io.rest-assured:rest-assured:5.5.6'
+    testImplementation 'io.rest-assured:json-schema-validator:5.5.6'
+    testImplementation 'io.qameta.allure:allure-rest-assured:2.24.0'
+    testImplementation "com.codeborne:selenide:7.11.1",
+            'io.qameta.allure:allure-selenide:2.24.0'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+tasks.register('api_ui_test', Test) {
+    useJUnitPlatform {
+        includeTags("api_ui_test")
+    }
+}
