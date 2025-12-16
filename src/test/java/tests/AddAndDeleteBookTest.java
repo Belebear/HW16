@@ -21,13 +21,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class AddAndDeleteBookTest extends TestBase {
     ProfilePage profilePage = new ProfilePage();
 
+    @DisplayName("Добавление и удаление книги")
     @Test
     @Tag("api_ui_test")
     void addAndDeleteBookTest() {
-        step("Очистка таблицы", () ->{
+        step("Очистка таблицы", () -> {
             given(RequestSpec.baseSpec())
                     .when()
-                    .delete("/BookStore/v1/Books?UserId=" + TestBase.getAuthResponse().path("userId") )
+                    .delete("/BookStore/v1/Books?UserId=" + TestBase.getAuthResponse().path("userId"))
                     .then()
                     .spec(ResponseSpec.baseResp(204));
         });

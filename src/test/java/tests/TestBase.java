@@ -15,13 +15,11 @@ import static org.hamcrest.Matchers.hasKey;
 
 
 public class TestBase {
-    static String userName = "belebear";
-    static String password = "Max21071997!";
+
     static String body = """
              {"userName" : "%s",
              "password": "%s"}
             """;
-
 
     @BeforeAll
     static void setUp() {
@@ -41,7 +39,7 @@ public class TestBase {
     @DisplayName("Авторизация и получение токена")
     public static Response getAuthResponse() {
         Response authCookie = given()
-                .body(body.formatted(userName, password))
+                .body(body.formatted(TestData.login, TestData.password))
                 .contentType("application/json")
                 .log().all()
                 .when()
